@@ -4,7 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xinheritance | Future of SaaS</title>
+
+    <!-- Primary SEO Meta Tags -->
+    <title>Xinheritance | Future of SaaS — xSplito, X-Labs & Shopify Plugins</title>
+    <meta name="description"
+        content="Xinheritance is a software company building next-gen SaaS products. We make xSplito (expense splitting app), X-Labs (developer tools: PDF editor, image editor, JSON formatter), and powerful Shopify plugins.">
+    <meta name="keywords"
+        content="Xinheritance, xSplito, X-Labs, expense splitting app, Shopify plugins, PDF editor, image editor, JSON formatter, SaaS, software company">
+    <meta name="author" content="Xinheritance">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xinheritance.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xinheritance.com/">
+    <meta property="og:title" content="Xinheritance | Future of SaaS — xSplito, X-Labs & Shopify Plugins">
+    <meta property="og:description"
+        content="We build SaaS tools that don't just work—they evolve. From smart expense management (xSplito) to developer toolkits (X-Labs) and Shopify powerhouses.">
+    <meta property="og:image" content="https://xinheritance.com/og-image.png">
+    <meta property="og:site_name" content="Xinheritance">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://xinheritance.com/">
+    <meta name="twitter:title" content="Xinheritance | Future of SaaS">
+    <meta name="twitter:description"
+        content="We build SaaS tools that don't just work—they evolve. xSplito, X-Labs & Shopify Plugins.">
+    <meta name="twitter:image" content="https://xinheritance.com/og-image.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Xinheritance",
+      "url": "https://xinheritance.com",
+      "description": "Xinheritance is a software company building next-gen SaaS tools including xSplito, X-Labs, and Shopify plugins.",
+      "sameAs": [],
+      "knowsAbout": ["SaaS", "Expense Management", "Shopify Plugins", "Developer Tools", "PDF Editor", "Image Editor", "JSON Formatter"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Products",
+        "itemListElement": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "xSplito",
+            "applicationCategory": "FinanceApplication",
+            "url": "https://xsplito.com",
+            "description": "The ultimate expense splitting and management app."
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "X-Labs",
+            "applicationCategory": "DeveloperApplication",
+            "url": "https://x-labs.xinheritance.com",
+            "description": "Developer tools including PDF editor, image editor, and JSON formatter."
+          }
+        ]
+      }
+    }
+    </script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -123,6 +182,39 @@
             color: #fff;
             overflow-x: hidden;
         }
+
+        /* Privacy Policy Page */
+        #privacy-page {
+            display: none;
+        }
+
+        #privacy-page.active {
+            display: block;
+        }
+
+        .privacy-section h3 {
+            color: #00E0FF;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .privacy-section p,
+        .privacy-section ul {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            line-height: 1.75;
+        }
+
+        .privacy-section ul {
+            list-style: disc;
+            padding-left: 1.25rem;
+        }
+
+        .privacy-section ul li {
+            margin-bottom: 0.25rem;
+        }
     </style>
 </head>
 
@@ -145,20 +237,22 @@
     <nav class="fixed w-full z-50 glass border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex-shrink-0 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="flex-shrink-0 cursor-pointer" onclick="showMainPage()">
                     <span class="font-display font-bold text-2xl tracking-tighter">
                         X<span class="text-brand-purple">inheritance</span>
                     </span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home"
+                        <a href="#home" onclick="showMainPage()"
                             class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#products"
+                        <a href="#products" onclick="showMainPage()"
                             class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">Software</a>
-                        <a href="#about"
+                        <a href="#about" onclick="showMainPage()"
                             class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#contact"
+                        <button onclick="showPrivacyPage()"
+                            class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">Privacy</button>
+                        <a href="#contact" onclick="showMainPage()"
                             class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all border border-white/10">Contact
                             Us</a>
                     </div>
@@ -174,285 +268,463 @@
         <!-- Mobile Menu -->
         <div class="hidden md:hidden glass border-t border-white/10" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home"
+                <a href="#home" onclick="showMainPage(); toggleMobileMenu();"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#products"
+                <a href="#products" onclick="showMainPage(); toggleMobileMenu();"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Software</a>
-                <a href="#about"
+                <a href="#about" onclick="showMainPage(); toggleMobileMenu();"
                     class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="#contact" class="text-brand-cyan block px-3 py-2 rounded-md text-base font-medium">Contact
+                <button onclick="showPrivacyPage(); toggleMobileMenu();"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Privacy
+                    Policy</button>
+                <a href="#contact" onclick="showMainPage(); toggleMobileMenu();"
+                    class="text-brand-cyan block px-3 py-2 rounded-md text-base font-medium">Contact
                     Us</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative z-10 min-h-screen flex items-center justify-center pt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div data-aos="fade-up" data-aos-duration="1000">
-                <span
-                    class="inline-block py-1 px-3 rounded-full bg-brand-purple/20 border border-brand-purple/50 text-brand-purple text-xs font-semibold tracking-wider mb-6">
-                    NEXT GEN SOFTWARE
-                </span>
-                <h1 class="text-5xl md:text-8xl font-display font-black tracking-tight mb-6 leading-tight">
-                    Inherit the <br>
-                    <span class="text-gradient">Digital Future</span>
-                </h1>
-                <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 font-light">
-                    We build SaaS tools that don't just work—they evolve. From smart expense management to Shopify
-                    powerhouses.
-                </p>
-                <div class="mt-10 flex justify-center gap-4">
-                    <a href="#products"
-                        class="group relative px-8 py-3 bg-brand-purple text-white font-bold rounded-full overflow-hidden transition-all hover:scale-105">
-                        <div
-                            class="absolute inset-0 w-full h-full bg-gradient-to-r from-brand-cyan to-brand-purple opacity-0 group-hover:opacity-100 transition-opacity">
-                        </div>
-                        <span class="relative flex items-center gap-2">Explore Apps <i
-                                class="fas fa-arrow-right"></i></span>
-                    </a>
-                    <a href="#contact" class="px-8 py-3 glass rounded-full font-bold hover:bg-white/10 transition-all">
-                        Let's Talk
-                    </a>
-                </div>
-            </div>
+    <!-- ===== MAIN PAGE CONTENT ===== -->
+    <div id="main-page">
 
-            <!-- Floating 3D Elements (CSS Visuals) -->
-            <div class="absolute top-1/2 left-10 hidden lg:block animate-float">
-                <div
-                    class="w-16 h-16 border border-brand-cyan/30 rounded-lg transform rotate-12 backdrop-blur-sm bg-white/5 flex items-center justify-center">
-                    <i class="fas fa-code text-brand-cyan text-2xl"></i>
+        <!-- Hero Section -->
+        <section id="home" class="relative z-10 min-h-screen flex items-center justify-center pt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div data-aos="fade-up" data-aos-duration="1000">
+                    <span
+                        class="inline-block py-1 px-3 rounded-full bg-brand-purple/20 border border-brand-purple/50 text-brand-purple text-xs font-semibold tracking-wider mb-6">
+                        NEXT GEN SOFTWARE
+                    </span>
+                    <h1 class="text-5xl md:text-8xl font-display font-black tracking-tight mb-6 leading-tight">
+                        Inherit the <br>
+                        <span class="text-gradient">Digital Future</span>
+                    </h1>
+                    <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 font-light">
+                        We build SaaS tools that don't just work—they evolve. From smart expense management to Shopify
+                        powerhouses.
+                    </p>
+                    <div class="mt-10 flex justify-center gap-4">
+                        <a href="#products"
+                            class="group relative px-8 py-3 bg-brand-purple text-white font-bold rounded-full overflow-hidden transition-all hover:scale-105">
+                            <div
+                                class="absolute inset-0 w-full h-full bg-gradient-to-r from-brand-cyan to-brand-purple opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                            <span class="relative flex items-center gap-2">Explore Apps <i
+                                    class="fas fa-arrow-right"></i></span>
+                        </a>
+                        <a href="#contact"
+                            class="px-8 py-3 glass rounded-full font-bold hover:bg-white/10 transition-all">
+                            Let's Talk
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Floating 3D Elements (CSS Visuals) -->
+                <div class="absolute top-1/2 left-10 hidden lg:block animate-float">
+                    <div
+                        class="w-16 h-16 border border-brand-cyan/30 rounded-lg transform rotate-12 backdrop-blur-sm bg-white/5 flex items-center justify-center">
+                        <i class="fas fa-code text-brand-cyan text-2xl"></i>
+                    </div>
+                </div>
+                <div class="absolute bottom-20 right-10 hidden lg:block animate-float" style="animation-delay: 1s;">
+                    <div
+                        class="w-20 h-20 border border-brand-pink/30 rounded-full transform -rotate-12 backdrop-blur-sm bg-white/5 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-brand-pink text-3xl"></i>
+                    </div>
                 </div>
             </div>
-            <div class="absolute bottom-20 right-10 hidden lg:block animate-float" style="animation-delay: 1s;">
-                <div
-                    class="w-20 h-20 border border-brand-pink/30 rounded-full transform -rotate-12 backdrop-blur-sm bg-white/5 flex items-center justify-center">
-                    <i class="fas fa-chart-line text-brand-pink text-3xl"></i>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="relative z-10 border-y border-white/10 bg-black/50 backdrop-blur-sm">
+            <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div data-aos="fade-up" data-aos-delay="0">
+                    <div class="text-3xl font-display font-bold text-white">10K+</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Active Users</div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-3xl font-display font-bold text-white">99.9%</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Uptime</div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-3xl font-display font-bold text-white">50+</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Countries</div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-3xl font-display font-bold text-white">24/7</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Support</div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Stats Section -->
-    <div class="relative z-10 border-y border-white/10 bg-black/50 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div data-aos="fade-up" data-aos-delay="0">
-                <div class="text-3xl font-display font-bold text-white">10K+</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Active Users</div>
+        <!-- Products Section -->
+        <section id="products" class="relative z-10 py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Our <span
+                            class="text-brand-cyan">Arsenal</span></h2>
+                    <p class="text-gray-400 max-w-xl mx-auto">Software designed for the modern web. Fast, intuitive, and
+                        aesthetically pleasing.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- xSplito -->
+                    <div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up"
+                        data-aos-delay="0">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-green-500/20 rounded-full blur-3xl group-hover:bg-green-500/40 transition-all">
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6">
+                            <i class="fas fa-wallet text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold mb-2">xSplito</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            The ultimate expense management app. Split bills, track spending, and manage budgets without
+                            the
+                            headache.
+                        </p>
+                        <ul class="text-sm text-gray-300 space-y-2 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Real-time
+                                Sync
+                            </li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> OCR Receipt
+                                Scan
+                            </li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Group
+                                Settlements
+                            </li>
+                        </ul>
+                        <a href="https://xsplito.com/" target="_blank" rel="noopener noreferrer"
+                            class="block w-full text-center py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">
+                            Visit xSplito <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Shopify Apps -->
+                    <div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl group-hover:bg-purple-500/40 transition-all">
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center mb-6">
+                            <i class="fas fa-shopping-bag text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold mb-2">Shopify Boosters</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            A suite of Shopify plugins to increase conversion, manage inventory, and gamify the shopping
+                            experience.
+                        </p>
+                        <ul class="text-sm text-gray-300 space-y-2 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-purple-400 mr-2"></i> One-Click
+                                Upsell
+                            </li>
+                            <li class="flex items-center"><i class="fas fa-check text-purple-400 mr-2"></i> Inventory
+                                Alerts
+                            </li>
+                            <li class="flex items-center"><i class="fas fa-check text-purple-400 mr-2"></i> Social Proof
+                                Widgets</li>
+                        </ul>
+                        <a href="https://apps.shopify.com/partners/xinheritance" target="_blank"
+                            rel="noopener noreferrer"
+                            class="block w-full text-center py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">
+                            View on App Store <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- X-Labs -->
+                    <div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div
+                            class="absolute -right-10 -top-10 w-32 h-32 bg-pink-500/20 rounded-full blur-3xl group-hover:bg-pink-500/40 transition-all">
+                        </div>
+                        <div
+                            class="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center mb-6">
+                            <i class="fas fa-flask text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold mb-2">X-Labs</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            A powerful suite of developer & productivity tools — PDF editor, image editor, JSON
+                            formatter,
+                            and more, all in your browser.
+                        </p>
+                        <ul class="text-sm text-gray-300 space-y-2 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-pink-400 mr-2"></i> PDF & Image
+                                Editor</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-400 mr-2"></i> JSON Formatter
+                                & Diff</li>
+                            <li class="flex items-center"><i class="fas fa-check text-pink-400 mr-2"></i> 100%
+                                Browser-Based
+                            </li>
+                        </ul>
+                        <a href="https://x-labs.xinheritance.com/" target="_blank" rel="noopener noreferrer"
+                            class="block w-full text-center py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">
+                            Open X-Labs <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div data-aos="fade-up" data-aos-delay="100">
-                <div class="text-3xl font-display font-bold text-white">99.9%</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Uptime</div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="relative z-10 py-24 bg-gradient-to-b from-transparent to-black/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2" data-aos="fade-right">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-brand-cyan/20 blur-3xl rounded-full"></div>
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Futuristic Office — Xinheritance Software"
+                            class="relative rounded-2xl border border-white/10 shadow-2xl hover:scale-105 transition-transform duration-500">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2" data-aos="fade-left">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">We don't just code. <br><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple">We
+                            Craft.</span></h2>
+                    <p class="text-gray-400 text-lg mb-6">
+                        Xinheritance was born from a simple idea: Software shouldn't just be functional; it should be an
+                        experience. We combine rigorous engineering with Gen Z design aesthetics to create tools people
+                        actually want to use.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <h4 class="font-bold text-white mb-1">Design First</h4>
+                            <p class="text-xs text-gray-400">Pixel perfect interfaces.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <h4 class="font-bold text-white mb-1">Cloud Native</h4>
+                            <p class="text-xs text-gray-400">Built for scale.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-display font-bold text-white">50+</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Countries</div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="relative z-10 py-24">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="glass-card rounded-3xl p-8 md:p-12 border-t border-white/20 shadow-2xl" data-aos="zoom-in">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Get in Touch</h2>
+                        <p class="text-gray-400">Have an idea? Need support? Drop us a line.</p>
+                    </div>
+
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="relative">
+                                <input type="text" id="name" name="name" required
+                                    class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all peer"
+                                    placeholder=" ">
+                                <label for="name"
+                                    class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-brand-purple">Name</label>
+                            </div>
+                            <div class="relative">
+                                <input type="email" id="email" name="email" required
+                                    class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all peer"
+                                    placeholder=" ">
+                                <label for="email"
+                                    class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-brand-purple">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <select id="interest" name="interest"
+                                class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-gray-300 focus:outline-none focus:border-brand-purple transition-all appearance-none">
+                                <option value="General">General Inquiry</option>
+                                <option value="xSplito">Support: xSplito</option>
+                                <option value="XLabs">Support: X-Labs</option>
+                                <option value="Shopify">Shopify App Customization</option>
+                            </select>
+                            <i class="fas fa-chevron-down absolute right-4 top-4 text-gray-500 pointer-events-none"></i>
+                        </div>
+
+                        <div class="relative">
+                            <textarea id="message" name="message" rows="4" required
+                                class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all peer"
+                                placeholder=" "></textarea>
+                            <label for="message"
+                                class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-brand-purple">Message</label>
+                        </div>
+
+                        <button type="submit" id="submitBtn"
+                            class="w-full bg-gradient-to-r from-brand-purple to-brand-pink text-white font-bold py-4 rounded-lg hover:shadow-[0_0_20px_rgba(112,0,255,0.5)] transition-all transform hover:-translate-y-1 relative overflow-hidden">
+                            <span id="btnText">Send Message</span>
+                            <div id="loadingSpinner"
+                                class="hidden absolute inset-0 flex items-center justify-center bg-brand-purple">
+                                <i class="fas fa-circle-notch fa-spin"></i>
+                            </div>
+                        </button>
+
+                        <div id="formStatus" class="text-center text-sm hidden"></div>
+                    </form>
+                </div>
             </div>
-            <div data-aos="fade-up" data-aos-delay="300">
-                <div class="text-3xl font-display font-bold text-white">24/7</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Support</div>
+        </section>
+
+    </div>
+    <!-- ===== END MAIN PAGE CONTENT ===== -->
+
+    <!-- ===== PRIVACY POLICY PAGE ===== -->
+    <div id="privacy-page" class="relative z-10 pt-28 pb-16 min-h-screen">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-8 md:p-12" data-aos="fade-up">
+                <!-- Back Button -->
+                <button onclick="showMainPage()"
+                    class="flex items-center gap-2 text-brand-cyan hover:text-white transition-colors text-sm font-medium mb-8">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+
+                <div class="mb-8">
+                    <span
+                        class="inline-block py-1 px-3 rounded-full bg-brand-purple/20 border border-brand-purple/50 text-brand-purple text-xs font-semibold tracking-wider mb-4">
+                        LEGAL
+                    </span>
+                    <h1 class="text-4xl md:text-5xl font-display font-bold mb-3">Privacy <span
+                            class="text-gradient">Policy</span></h1>
+                    <p class="text-gray-500 text-sm">Last updated: February 24, 2025 &nbsp;|&nbsp; Effective: February
+                        24, 2025</p>
+                </div>
+
+                <div class="privacy-section">
+                    <p>
+                        Xinheritance ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy
+                        explains how we collect, use, disclose, and safeguard your information when you visit our
+                        website <strong>xinheritance.com</strong> and use our products — <strong>xSplito</strong>,
+                        <strong>X-Labs</strong>, and our <strong>Shopify Plugins</strong>. Please read this policy
+                        carefully. If you disagree with its terms, please discontinue use of our services.
+                    </p>
+
+                    <h3><i class="fas fa-database mr-2"></i>1. Information We Collect</h3>
+                    <p>We may collect the following types of information:</p>
+                    <ul>
+                        <li><strong>Personal Identification Information:</strong> Name, email address, and other details
+                            you provide voluntarily through contact forms or account registration.</li>
+                        <li><strong>Usage Data:</strong> Pages visited, time spent, clicks, browser type, IP address,
+                            and device information collected automatically via cookies and analytics tools.</li>
+                        <li><strong>Financial Data (xSplito):</strong> Expense amounts, group names, and settlement
+                            history — stored securely and never shared with third parties for marketing.</li>
+                        <li><strong>Tool Usage Data (X-Labs):</strong> File types processed (PDF, images, JSON). We do
+                            not store the content of files processed in the browser.</li>
+                        <li><strong>Shopify Store Data:</strong> If you install our Shopify plugins, we may access store
+                            information as outlined in each plugin's Shopify App listing.</li>
+                    </ul>
+
+                    <h3><i class="fas fa-cogs mr-2"></i>2. How We Use Your Information</h3>
+                    <p>We use the information we collect to:</p>
+                    <ul>
+                        <li>Provide, operate, and maintain our services and products.</li>
+                        <li>Respond to your contact form inquiries and provide customer support.</li>
+                        <li>Send you product updates, security notices, and promotional materials (you may opt out at
+                            any time).</li>
+                        <li>Monitor and analyze usage trends to improve user experience.</li>
+                        <li>Detect, prevent, and address technical issues or fraudulent activity.</li>
+                        <li>Comply with legal obligations.</li>
+                    </ul>
+
+                    <h3><i class="fas fa-share-alt mr-2"></i>3. Sharing Your Information</h3>
+                    <p>We do <strong>not</strong> sell, trade, or rent your personal information. We may share data
+                        with:</p>
+                    <ul>
+                        <li><strong>Service Providers:</strong> Trusted third parties who assist us in operating our
+                            platforms (e.g., hosting, analytics, payment processing), subject to confidentiality
+                            agreements.</li>
+                        <li><strong>Legal Requirements:</strong> When required by law, subpoena, or to protect the
+                            rights and safety of Xinheritance and its users.</li>
+                        <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or asset sale,
+                            your data may be transferred as part of the transaction.</li>
+                    </ul>
+
+                    <h3><i class="fas fa-cookie-bite mr-2"></i>4. Cookies & Tracking Technologies</h3>
+                    <p>We use cookies and similar tracking technologies to enhance your experience. These include:</p>
+                    <ul>
+                        <li><strong>Essential Cookies:</strong> Required for the website to function properly.</li>
+                        <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our site
+                            (e.g., Google Analytics).</li>
+                        <li><strong>Preference Cookies:</strong> Remember your settings and preferences.</li>
+                    </ul>
+                    <p>You can control cookie settings through your browser. Disabling cookies may affect certain
+                        features of our services.</p>
+
+                    <h3><i class="fas fa-shield-alt mr-2"></i>5. Data Security</h3>
+                    <p>
+                        We implement industry-standard security measures including SSL/TLS encryption, secure storage,
+                        and access controls to protect your information. However, no method of internet transmission or
+                        electronic storage is 100% secure. We cannot guarantee absolute security but strive to use
+                        commercially acceptable means to protect your data.
+                    </p>
+
+                    <h3><i class="fas fa-user-check mr-2"></i>6. Your Rights</h3>
+                    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+                    <ul>
+                        <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+                        <li><strong>Correction:</strong> Request correction of inaccurate or incomplete data.</li>
+                        <li><strong>Deletion:</strong> Request deletion of your personal data ("right to be forgotten").
+                        </li>
+                        <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time via the link
+                            in our emails.</li>
+                        <li><strong>Data Portability:</strong> Request your data in a structured, machine-readable
+                            format.</li>
+                    </ul>
+                    <p>To exercise these rights, contact us at <a href="mailto:privacy@xinheritance.com"
+                            class="text-brand-cyan hover:underline">privacy@xinheritance.com</a>.</p>
+
+                    <h3><i class="fas fa-child mr-2"></i>7. Children's Privacy</h3>
+                    <p>
+                        Our services are not directed to individuals under the age of 13. We do not knowingly collect
+                        personal information from children under 13. If we become aware that a child under 13 has
+                        provided us with personal information, we will delete it promptly.
+                    </p>
+
+                    <h3><i class="fas fa-clock mr-2"></i>8. Data Retention</h3>
+                    <p>
+                        We retain your personal information only for as long as necessary to fulfill the purposes
+                        outlined in this policy, comply with legal obligations, resolve disputes, and enforce our
+                        agreements. When data is no longer needed, it is securely deleted or anonymized.
+                    </p>
+
+                    <h3><i class="fas fa-globe mr-2"></i>9. Third-Party Links</h3>
+                    <p>
+                        Our website and products may contain links to third-party websites, including <a
+                            href="https://xsplito.com" target="_blank" rel="noopener"
+                            class="text-brand-cyan hover:underline">xsplito.com</a> and <a
+                            href="https://x-labs.xinheritance.com" target="_blank" rel="noopener"
+                            class="text-brand-cyan hover:underline">x-labs.xinheritance.com</a>. We are not responsible
+                        for the privacy practices of third-party sites. We encourage you to review their respective
+                        privacy policies.
+                    </p>
+
+                    <h3><i class="fas fa-sync-alt mr-2"></i>10. Changes to This Policy</h3>
+                    <p>
+                        We may update this Privacy Policy from time to time. We will notify you of significant changes
+                        by updating the "Last updated" date at the top of this page. We encourage you to review this
+                        policy periodically. Continued use of our services after changes constitutes your acceptance of
+                        the updated policy.
+                    </p>
+
+                    <h3><i class="fas fa-envelope mr-2"></i>11. Contact Us</h3>
+                    <p>If you have any questions, concerns, or requests regarding this Privacy Policy, please reach out:
+                    </p>
+                    <ul>
+                        <li><strong>Company:</strong> Xinheritance</li>
+                        <li><strong>Email:</strong> <a href="mailto:privacy@xinheritance.com"
+                                class="text-brand-cyan hover:underline">privacy@xinheritance.com</a></li>
+                        <li><strong>Website:</strong> <a href="https://xinheritance.com"
+                                class="text-brand-cyan hover:underline">xinheritance.com</a></li>
+                    </ul>
+                </div>
+
+                <!-- Back to home CTA -->
+                <div class="mt-12 pt-8 border-t border-white/10 text-center">
+                    <button onclick="showMainPage()"
+                        class="px-8 py-3 bg-brand-purple text-white font-bold rounded-full hover:bg-brand-purple/80 transition-all hover:scale-105">
+                        <i class="fas fa-home mr-2"></i> Back to Home
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Products Section -->
-    <section id="products" class="relative z-10 py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Our <span
-                        class="text-brand-cyan">Arsenal</span></h2>
-                <p class="text-gray-400 max-w-xl mx-auto">Software designed for the modern web. Fast, intuitive, and
-                    aesthetically pleasing.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- xSplito -->
-                <div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up"
-                    data-aos-delay="0">
-                    <div
-                        class="absolute -right-10 -top-10 w-32 h-32 bg-green-500/20 rounded-full blur-3xl group-hover:bg-green-500/40 transition-all">
-                    </div>
-                    <div
-                        class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6">
-                        <i class="fas fa-wallet text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-display font-bold mb-2">xSplito</h3>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                        The ultimate expense management app. Split bills, track spending, and manage budgets without the
-                        headache.
-                    </p>
-                    <ul class="text-sm text-gray-300 space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Real-time Sync
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> OCR Receipt Scan
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i> Group Settlements
-                        </li>
-                    </ul>
-                    <button
-                        class="w-full py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">Try
-                        Demo</button>
-                </div>
-
-                <!-- Shopify Apps -->
-                <div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up"
-                    data-aos-delay="100">
-                    <div
-                        class="absolute -right-10 -top-10 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl group-hover:bg-purple-500/40 transition-all">
-                    </div>
-                    <div
-                        class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center mb-6">
-                        <i class="fas fa-shopping-bag text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-display font-bold mb-2">Shopify Boosters</h3>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                        A suite of Shopify plugins to increase conversion, manage inventory, and gamify the shopping
-                        experience.
-                    </p>
-                    <ul class="text-sm text-gray-300 space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-purple-400 mr-2"></i> One-Click Upsell
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-check text-purple-400 mr-2"></i> Inventory Alerts
-                        </li>
-                        <li class="flex items-center"><i class="fas fa-check text-purple-400 mr-2"></i> Social Proof
-                            Widgets</li>
-                    </ul>
-                    <button
-                        class="w-full py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">View
-                        on AppStore</button>
-                </div>
-
-                <!-- Future Apps -->
-                <div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up"
-                    data-aos-delay="200">
-                    <div
-                        class="absolute -right-10 -top-10 w-32 h-32 bg-pink-500/20 rounded-full blur-3xl group-hover:bg-pink-500/40 transition-all">
-                    </div>
-                    <div
-                        class="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center mb-6">
-                        <i class="fas fa-bolt text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-display font-bold mb-2">X-Labs</h3>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                        Experimental tools cooking in our labs. From AI writing assistants to productivity hacks.
-                    </p>
-                    <ul class="text-sm text-gray-300 space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-pink-400 mr-2"></i> AI Integrated</li>
-                        <li class="flex items-center"><i class="fas fa-check text-pink-400 mr-2"></i> Beta Access</li>
-                        <li class="flex items-center"><i class="fas fa-check text-pink-400 mr-2"></i> Cross Platform
-                        </li>
-                    </ul>
-                    <button
-                        class="w-full py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">Join
-                        Waitlist</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="relative z-10 py-24 bg-gradient-to-b from-transparent to-black/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
-            <div class="w-full md:w-1/2" data-aos="fade-right">
-                <div class="relative">
-                    <div class="absolute inset-0 bg-brand-cyan/20 blur-3xl rounded-full"></div>
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                        alt="Futuristic Office"
-                        class="relative rounded-2xl border border-white/10 shadow-2xl hover:scale-105 transition-transform duration-500">
-                </div>
-            </div>
-            <div class="w-full md:w-1/2" data-aos="fade-left">
-                <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">We don't just code. <br><span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple">We
-                        Craft.</span></h2>
-                <p class="text-gray-400 text-lg mb-6">
-                    Xinheritance was born from a simple idea: Software shouldn't just be functional; it should be an
-                    experience. We combine rigorous engineering with Gen Z design aesthetics to create tools people
-                    actually want to use.
-                </p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5">
-                        <h4 class="font-bold text-white mb-1">Design First</h4>
-                        <p class="text-xs text-gray-400">Pixel perfect interfaces.</p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-white/5 border border-white/5">
-                        <h4 class="font-bold text-white mb-1">Cloud Native</h4>
-                        <p class="text-xs text-gray-400">Built for scale.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="relative z-10 py-24">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-card rounded-3xl p-8 md:p-12 border-t border-white/20 shadow-2xl" data-aos="zoom-in">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Get in Touch</h2>
-                    <p class="text-gray-400">Have an idea? Need support? Drop us a line.</p>
-                </div>
-
-                <!--
-                     GOOGLE SHEET INTEGRATION NOTE:
-                     To connect this to a Google Sheet:
-                     1. Create a Google Sheet.
-                     2. Go to Extensions > Apps Script.
-                     3. Paste a standard 'doPost' script that appends rows.
-                     4. Deploy as Web App (Anyone can access).
-                     5. Replace 'YOUR_GOOGLE_SCRIPT_URL' in the JavaScript below.
-                -->
-
-                <form id="contactForm" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="relative">
-                            <input type="text" id="name" name="name" required
-                                class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all peer"
-                                placeholder=" ">
-                            <label for="name"
-                                class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-brand-purple">Name</label>
-                        </div>
-                        <div class="relative">
-                            <input type="email" id="email" name="email" required
-                                class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all peer"
-                                placeholder=" ">
-                            <label for="email"
-                                class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-brand-purple">Email</label>
-                        </div>
-                    </div>
-
-                    <div class="relative">
-                        <select id="interest" name="interest"
-                            class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-gray-300 focus:outline-none focus:border-brand-purple transition-all appearance-none">
-                            <option value="General">General Inquiry</option>
-                            <option value="xSplito">Support: xSplito</option>
-                            <option value="Shopify">Shopify App Customization</option>
-                        </select>
-                        <i class="fas fa-chevron-down absolute right-4 top-4 text-gray-500 pointer-events-none"></i>
-                    </div>
-
-                    <div class="relative">
-                        <textarea id="message" name="message" rows="4" required
-                            class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all peer"
-                            placeholder=" "></textarea>
-                        <label for="message"
-                            class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-xs peer-focus:text-brand-purple">Message</label>
-                    </div>
-
-                    <button type="submit" id="submitBtn"
-                        class="w-full bg-gradient-to-r from-brand-purple to-brand-pink text-white font-bold py-4 rounded-lg hover:shadow-[0_0_20px_rgba(112,0,255,0.5)] transition-all transform hover:-translate-y-1 relative overflow-hidden">
-                        <span id="btnText">Send Message</span>
-                        <div id="loadingSpinner"
-                            class="hidden absolute inset-0 flex items-center justify-center bg-brand-purple">
-                            <i class="fas fa-circle-notch fa-spin"></i>
-                        </div>
-                    </button>
-
-                    <div id="formStatus" class="text-center text-sm hidden"></div>
-                </form>
-            </div>
-        </div>
-    </section>
+    <!-- ===== END PRIVACY POLICY PAGE ===== -->
 
     <!-- Footer -->
     <footer class="relative z-10 border-t border-white/10 bg-black pt-16 pb-8">
@@ -469,41 +741,54 @@
                 <div>
                     <h4 class="text-white font-bold mb-4">Products</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-brand-cyan transition-colors">xSplito</a></li>
-                        <li><a href="#" class="hover:text-brand-cyan transition-colors">Shopify Apps</a></li>
-                        <li><a href="#" class="hover:text-brand-cyan transition-colors">X-Labs</a></li>
+                        <li><a href="https://xsplito.com/" target="_blank" rel="noopener noreferrer"
+                                class="hover:text-brand-cyan transition-colors">xSplito</a></li>
+                        <li><a href="https://apps.shopify.com/partners/xinheritance" target="_blank"
+                                rel="noopener noreferrer" class="hover:text-brand-cyan transition-colors">Shopify
+                                Apps</a>
+                        </li>
+                        <li><a href="https://x-labs.xinheritance.com/" target="_blank" rel="noopener noreferrer"
+                                class="hover:text-brand-cyan transition-colors">X-Labs</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4">Company</h4>
                     <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-brand-cyan transition-colors">About</a></li>
-                        <li><a href="#" class="hover:text-brand-cyan transition-colors">Careers</a></li>
-                        <li><a href="#" class="hover:text-brand-cyan transition-colors">Contact</a></li>
+                        <li><a href="#about" onclick="showMainPage()"
+                                class="hover:text-brand-cyan transition-colors">About</a></li>
+                        <li><a href="#contact" onclick="showMainPage()"
+                                class="hover:text-brand-cyan transition-colors">Contact</a></li>
+                        <li><button onclick="showPrivacyPage()"
+                                class="hover:text-brand-cyan transition-colors text-left">Privacy Policy</button></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4">Social</h4>
                     <div class="flex space-x-4">
                         <a href="#"
-                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-purple transition-colors text-white">
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-purple transition-colors text-white"
+                            aria-label="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
                         <a href="#"
-                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-purple transition-colors text-white">
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-purple transition-colors text-white"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <a href="#"
-                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-purple transition-colors text-white">
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-purple transition-colors text-white"
+                            aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-600 text-sm">&copy; 2024 Xinheritance Inc. All rights reserved.</p>
+                <p class="text-gray-600 text-sm">&copy; 2025 Xinheritance Inc. All rights reserved.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-600 hover:text-white text-sm">Privacy</a>
+                    <button onclick="showPrivacyPage()"
+                        class="text-gray-600 hover:text-white text-sm transition-colors">Privacy
+                        Policy</button>
                     <a href="#" class="text-gray-600 hover:text-white text-sm">Terms</a>
                 </div>
             </div>
@@ -526,6 +811,20 @@
             menu.classList.toggle('hidden');
         }
 
+        // Page visibility toggle
+        function showPrivacyPage() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('privacy-page').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function showMainPage() {
+            document.getElementById('privacy-page').classList.remove('active');
+            document.getElementById('main-page').style.display = 'block';
+        }
+
         // Form Handling Logic
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -544,21 +843,6 @@
             // Gather Data
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-
-            // --- GOOGLE SHEET CONNECTION INSTRUCTIONS ---
-            /*
-               To make this actually save to a sheet, you need to use Google Apps Script.
-               1. Create a Google Script (Web App).
-               2. Add this code in the script:
-                  function doPost(e) {
-                    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-                    var data = JSON.parse(e.postData.contents);
-                    sheet.appendRow([new Date(), data.name, data.email, data.interest, data.message]);
-                    return ContentService.createTextOutput(JSON.stringify({'result': 'success'})).setMimeType(ContentService.MimeType.JSON);
-                  }
-               3. Deploy the script and get the URL.
-               4. Uncomment the fetch code below and replace URL.
-            */
 
             // SIMULATED SUBMISSION (For Demo Purposes)
             setTimeout(() => {

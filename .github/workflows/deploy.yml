@@ -1,0 +1,22 @@
+name: Deploy xinheritance Website
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: xinheritance-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Apache folder
+        run: |
+          rsync -av --delete ./ /var/www/html/
