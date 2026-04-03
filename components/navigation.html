@@ -1,0 +1,50 @@
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 cursor-pointer" onclick="showMainPage()">
+                    <span class="font-display font-bold text-2xl tracking-tighter">
+                        X<span class="text-brand-purple">inheritance</span>
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" onclick="showMainPage()"
+                            class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#products" onclick="showMainPage()"
+                            class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">Software</a>
+                        <a href="#about" onclick="showMainPage()"
+                            class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <button onclick="showPrivacyPage()"
+                            class="hover:text-brand-cyan transition-colors px-3 py-2 rounded-md text-sm font-medium">Privacy</button>
+                        <a href="#contact" onclick="showMainPage()"
+                            class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all border border-white/10">Contact
+                            Us</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden glass border-t border-white/10" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" onclick="showMainPage(); toggleMobileMenu();"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#products" onclick="showMainPage(); toggleMobileMenu();"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Software</a>
+                <a href="#about" onclick="showMainPage(); toggleMobileMenu();"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <button onclick="showPrivacyPage(); toggleMobileMenu();"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Privacy
+                    Policy</button>
+                <a href="#contact" onclick="showMainPage(); toggleMobileMenu();"
+                    class="text-brand-cyan block px-3 py-2 rounded-md text-base font-medium">Contact
+                    Us</a>
+            </div>
+        </div>
+    </nav>
