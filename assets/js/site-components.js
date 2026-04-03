@@ -15,7 +15,8 @@
     submitBtn: 'submitBtn',
     btnText: 'btnText',
     loadingSpinner: 'loadingSpinner',
-    formStatus: 'formStatus'
+    formStatus: 'formStatus',
+    productsGrid: 'productsGrid'
   };
   const enquiryConfig = {
     endpoint: (function resolveEndpoint() {
@@ -27,9 +28,115 @@
     })(),
     minLoadingMs: 2000
   };
+  const seoMetaByPage = {
+    main: {
+      title: 'Xinheritance | Future of SaaS — xSplito, XLabTool & Shopify Plugins',
+      description: 'Xinheritance is a top-tier software company building next-gen SaaS products. Discover xSplito, XLabTool, and powerful Shopify plugins.',
+      keywords: 'Xinheritance, SaaS company, xSplito, XLabTool, Shopify plugins, developer tools',
+      ogTitle: 'Xinheritance | Future of SaaS — xSplito, XLabTool & Shopify Plugins',
+      ogDescription: "We build SaaS tools that don't just work—they evolve. From smart expense management to developer toolkits and Shopify powerhouses.",
+      ogUrl: 'https://xinheritance.com/',
+      twitterTitle: 'Xinheritance | Future of SaaS',
+      twitterDescription: "We build SaaS tools that don't just work—they evolve. xSplito, XLabTool & Shopify Plugins.",
+      canonical: 'https://xinheritance.com/'
+    },
+    privacy: {
+      title: 'Privacy Policy | Xinheritance',
+      description: 'Read the official Xinheritance privacy policy covering data collection, usage, retention, and user rights.',
+      keywords: 'Xinheritance privacy policy, data protection, cookies, user rights, GDPR',
+      ogTitle: 'Privacy Policy | Xinheritance',
+      ogDescription: 'Learn how Xinheritance collects, uses, stores, and protects your information across our services.',
+      ogUrl: 'https://xinheritance.com/#privacy',
+      twitterTitle: 'Privacy Policy | Xinheritance',
+      twitterDescription: 'Understand how your data is handled at Xinheritance.',
+      canonical: 'https://xinheritance.com/'
+    }
+  };
 
   function getById(id) {
     return document.getElementById(id);
+  }
+
+  function setMetaByAttribute(attr, key, value) {
+    const el = document.head.querySelector('meta[' + attr + '="' + key + '"]');
+    if (el) {
+      el.setAttribute('content', value);
+    }
+  }
+
+  function setCanonical(url) {
+    const canonicalLink = document.head.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', url);
+    }
+  }
+
+  function applySeoMeta(pageKey) {
+    const meta = seoMetaByPage[pageKey] || seoMetaByPage.main;
+    document.title = meta.title;
+    setMetaByAttribute('name', 'title', meta.title);
+    setMetaByAttribute('name', 'description', meta.description);
+    setMetaByAttribute('name', 'keywords', meta.keywords);
+    setMetaByAttribute('property', 'og:title', meta.ogTitle);
+    setMetaByAttribute('property', 'og:description', meta.ogDescription);
+    setMetaByAttribute('property', 'og:url', meta.ogUrl);
+    setMetaByAttribute('name', 'twitter:title', meta.twitterTitle);
+    setMetaByAttribute('name', 'twitter:description', meta.twitterDescription);
+    setCanonical(meta.canonical);
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function getProductsData() {
+    if (Array.isArray(window.XINHERITANCE_PRODUCTS)) {
+      return window.XINHERITANCE_PRODUCTS;
+    }
+    return [];
+  }
+
+  function renderProductCards(products) {
+    const grid = getById(selectors.productsGrid);
+    if (!grid) return;
+
+    grid.innerHTML = products.map(function (product, index) {
+      const highlights = product.card.highlights.map(function (item) {
+        return '<li class="flex items-center"><i class="fas fa-check ' + product.card.checksColorClass + ' mr-2"></i> ' + escapeHtml(item) + '</li>';
+      }).join('');
+
+      return (
+        '<div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="' + (index * 100) + '">' +
+          '<div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl transition-all ' + product.card.glowClass + '"></div>' +
+          '<div class="w-12 h-12 rounded-lg bg-gradient-to-br ' + product.card.iconGradient + ' flex items-center justify-center mb-6">' +
+            '<i class="' + product.card.iconClass + ' text-white text-xl"></i>' +
+          '</div>' +
+          '<h3 class="text-2xl font-display font-bold mb-1">' + escapeHtml(product.card.name) + '</h3>' +
+          '<p class="text-brand-cyan text-xs uppercase tracking-wider mb-3">' + escapeHtml(product.card.tagline) + '</p>' +
+          '<p class="text-gray-400 text-sm mb-6 leading-relaxed">' + escapeHtml(product.card.shortDescription) + '</p>' +
+          '<ul class="text-sm text-gray-300 space-y-2 mb-6">' + highlights + '</ul>' +
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">' +
+            '<a href="' + escapeHtml(product.detailPagePath || '#') + '" class="block w-full text-center py-2 rounded-lg border border-brand-cyan/40 hover:bg-brand-cyan/10 transition-colors text-sm font-semibold">View Details</a>' +
+            '<a href="' + escapeHtml(product.websiteUrl) + '" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">' + escapeHtml(product.card.websiteLabel) + ' <i class="fas fa-external-link-alt ml-1 text-xs"></i></a>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function initProductsComponent() {
+    const products = getProductsData();
+    if (!products.length) return;
+
+    const productsGrid = getById(selectors.productsGrid);
+    if (!productsGrid) return;
+
+    renderProductCards(products);
   }
 
   function loadComponentIntoSlot(slotId, html) {
@@ -73,17 +180,41 @@
   }
 
   function initPageVisibilityComponent() {
-    window.showPrivacyPage = function showPrivacyPage() {
+    function activatePrivacyPage(pushHash) {
       getById(selectors.mainPage).style.display = 'none';
       getById(selectors.privacyPage).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       getById(selectors.mobileMenu).classList.add('hidden');
+      applySeoMeta('privacy');
+
+      if (pushHash) {
+        window.history.pushState(null, '', '#privacy');
+      }
+    }
+
+    function activateMainPage(pushHash) {
+      getById(selectors.privacyPage).classList.remove('active');
+      getById(selectors.mainPage).style.display = 'block';
+      applySeoMeta('main');
+
+      if (pushHash && window.location.hash === '#privacy') {
+        window.history.pushState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+
+    window.showPrivacyPage = function showPrivacyPage() {
+      activatePrivacyPage(true);
     };
 
     window.showMainPage = function showMainPage() {
-      getById(selectors.privacyPage).classList.remove('active');
-      getById(selectors.mainPage).style.display = 'block';
+      activateMainPage(true);
     };
+
+    if (window.location.hash === '#privacy') {
+      activatePrivacyPage(false);
+    } else {
+      activateMainPage(false);
+    }
   }
 
   function initContactFormComponent() {
@@ -182,6 +313,7 @@
     initAOSComponent();
     initNavigationComponent();
     initPageVisibilityComponent();
+    initProductsComponent();
     initContactFormComponent();
   }
 
