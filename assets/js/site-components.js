@@ -127,11 +127,25 @@
               Accept: 'application/json'
             },
             body: JSON.stringify(data)
-          }).then(function (response) {
-            if (!response.ok) {
-              throw new Error('Submission failed');
+          }).then(async function (response) {
+            const raw = await response.text();
+            let payload = null;
+
+            try {
+              payload = raw ? JSON.parse(raw) : null;
+            } catch (parseError) {
+              throw new Error('Invalid server response');
             }
-            return response.json();
+
+            if (!response.ok) {
+              throw new Error((payload && payload.error) ? payload.error : 'Submission failed');
+            }
+
+            if (!payload || payload.ok !== true) {
+              throw new Error((payload && payload.error) ? payload.error : 'Submission failed');
+            }
+
+            return payload;
           }),
           new Promise(function (resolve) {
             setTimeout(resolve, enquiryConfig.minLoadingMs);

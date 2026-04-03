@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+ini_set('display_errors', '0');
+ob_start();
+
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/smtp_mailer.php';
 
@@ -19,24 +22,33 @@ if ($requestOrigin !== '' && ($isLocalDevOrigin || in_array($requestOrigin, $all
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+function jsonResponse(int $statusCode, array $payload): void
+{
+    if (ob_get_length()) {
+        ob_clean();
+    }
+    http_response_code($statusCode);
+    echo json_encode($payload);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    if (ob_get_length()) {
+        ob_clean();
+    }
     http_response_code(204);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['ok' => false, 'error' => 'Method not allowed']);
-    exit;
+    jsonResponse(405, ['ok' => false, 'error' => 'Method not allowed']);
 }
 
 $raw = file_get_contents('php://input');
 $data = json_decode((string)$raw, true);
 
 if (!is_array($data)) {
-    http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'Invalid JSON']);
-    exit;
+    jsonResponse(400, ['ok' => false, 'error' => 'Invalid JSON']);
 }
 
 $name = trim((string)($data['name'] ?? ''));
@@ -46,20 +58,15 @@ $message = trim((string)($data['message'] ?? ''));
 $honeypot = trim((string)($data['company_website'] ?? ''));
 
 if ($honeypot !== '') {
-    echo json_encode(['ok' => true]);
-    exit;
+    jsonResponse(200, ['ok' => true]);
 }
 
 if ($name === '' || $email === '' || $message === '') {
-    http_response_code(422);
-    echo json_encode(['ok' => false, 'error' => 'Missing required fields']);
-    exit;
+    jsonResponse(422, ['ok' => false, 'error' => 'Missing required fields']);
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(422);
-    echo json_encode(['ok' => false, 'error' => 'Invalid email']);
-    exit;
+    jsonResponse(422, ['ok' => false, 'error' => 'Invalid email']);
 }
 
 $requiredConfig = [
@@ -69,9 +76,7 @@ $requiredConfig = [
 
 foreach ($requiredConfig as $key) {
     if (empty($config[$key])) {
-        http_response_code(500);
-        echo json_encode(['ok' => false, 'error' => 'Server mail config missing: ' . $key]);
-        exit;
+        jsonResponse(500, ['ok' => false, 'error' => 'Server mail config missing: ' . $key]);
     }
 }
 
@@ -91,8 +96,8 @@ try {
         'body' => $body,
     ]);
 
-    echo json_encode(['ok' => true]);
+    jsonResponse(200, ['ok' => true]);
 } catch (Throwable $error) {
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Unable to send email']);
+    error_log('send-mail.php error: ' . $error->getMessage());
+    jsonResponse(500, ['ok' => false, 'error' => 'Unable to send email']);
 }
