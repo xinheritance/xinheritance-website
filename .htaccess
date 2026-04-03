@@ -1,0 +1,11 @@
+# Security hardening
+Options -Indexes
+
+# Never expose environment or hidden files
+<FilesMatch "^\.env">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
