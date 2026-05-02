@@ -105,7 +105,9 @@
     const grid = getById(selectors.productsGrid);
     if (!grid) return;
 
-    grid.innerHTML = products.map(function (product, index) {
+    if (!products || !Array.isArray(products) || !products.length) {
+      if (!product.card || !product.card.highlights) return '';
+
       const highlights = product.card.highlights.map(function (item) {
         return '<li class="flex items-start gap-3"><i class="fas fa-check mt-1"></i><span>' + escapeHtml(item) + '</span></li>';
       }).join('');
@@ -137,10 +139,18 @@
 
   function initProductsComponent() {
     const products = getProductsData();
-    if (!products.length) return;
-
     const productsGrid = getById(selectors.productsGrid);
-    if (!productsGrid) return;
+
+    if (!productsGrid) {
+      console.error('Products grid container not found. Retrying in 100ms...');
+      setTimeout(initProductsComponent, 100);
+      return;
+    }
+
+    if (!products.length) {
+      console.warn('XINHERITANCE_PRODUCTS is empty or not yet loaded.');
+      return;
+    }
 
     renderProductCards(products);
     if (window.AOS && typeof window.AOS.refreshHard === 'function') {
