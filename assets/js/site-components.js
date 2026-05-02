@@ -105,7 +105,9 @@
     const grid = getById(selectors.productsGrid);
     if (!grid) return;
 
-    if (!products || !Array.isArray(products) || !products.length) {
+    if (!products || !Array.isArray(products) || !products.length) return;
+
+    grid.innerHTML = products.map(function (product, index) {
       if (!product.card || !product.card.highlights) return '';
 
       const highlights = product.card.highlights.map(function (item) {
@@ -170,24 +172,6 @@
       throw new Error('Unable to load component: ' + path);
     }
     return response.text();
-  }
-
-  async function loadAllComponents() {
-    const loaded = await Promise.all(componentMap.map(async function (component) {
-      const html = await loadHtmlComponent(component.path);
-      return { slotId: component.slotId, html: html };
-    }));
-
-    loaded.forEach(function (component) {
-      loadComponentIntoSlot(component.slotId, component.html);
-    });
-  }
-
-  function initAOSComponent() {
-    // Scroll animations disabled to fix visibility while keeping UX simple
-    AOS.init({
-      disable: true
-    });
   }
 
   function initNavigationComponent() {
@@ -261,32 +245,23 @@
       const spinner = getById(selectors.loadingSpinner);
       const status = getById(selectors.formStatus);
 
+      if (!btn || !btnText || !spinner || !status) return;
+
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach(function (value, key) {
+        data[key] = value;
+      });
+
       btnText.classList.add('opacity-0');
       spinner.classList.remove('hidden');
       btn.disabled = true;
-
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      // Honeypot guard: bots often fill hidden fields.
-      if (data.company_website && String(data.company_website).trim() !== '') {
-        btnText.classList.remove('opacity-0');
-        spinner.classList.add('hidden');
-        btn.disabled = false;
-        form.reset();
-        return;
-      }
-
-      data._subject = 'New Enquiry from xinheritance.com';
-      data._captcha = 'false';
-      data._template = 'table';
 
       try {
         await Promise.all([
           fetch(enquiryConfig.endpoint, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
               Accept: 'application/json'
             },
             body: JSON.stringify(data)
@@ -341,21 +316,34 @@
     });
   }
 
-  function initSiteComponents() {
-    initNavigationComponent();
-    initPageVisibilityComponent();
-    initProductsComponent();
-    initContactFormComponent();
+  async function loadAndInitComponent(component) {
+    try {
+      const html = await loadHtmlComponent(component.path);
+      loadComponentIntoSlot(component.slotId, html);
+      console.log('Successfully loaded:', component.slotId);
+
+      // Initialize specific component logic after its HTML is in place
+      if (component.slotId === 'navigation-slot') {
+        initNavigationComponent();
+      } else if (component.slotId === 'main-page-slot') {
+        initPageVisibilityComponent();
+        initProductsComponent();
+        initContactFormComponent();
+      }
+    } catch (error) {
+      console.error('Error loading component (' + component.slotId + '):', error.message);
+    }
   }
 
   async function bootstrap() {
-    await loadAllComponents();
-    initSiteComponents();
+    // Load components in parallel but initialize them individually
+    await Promise.all(componentMap.map(loadAndInitComponent));
+    console.log('Site bootstrap sequence completed.');
   }
 
   function startBootstrap() {
     bootstrap().catch(function (error) {
-      console.error(error);
+      console.error('Bootstrap failed:', error);
     });
   }
 
