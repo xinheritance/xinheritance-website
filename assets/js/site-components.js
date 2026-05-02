@@ -30,13 +30,13 @@
   };
   const seoMetaByPage = {
     main: {
-      title: 'Xinheritance | Future of SaaS — xSplito, XLabTool & Shopify Plugins',
-      description: 'Xinheritance is a top-tier software company building next-gen SaaS products. Discover xSplito, XLabTool, and powerful Shopify plugins.',
-      keywords: 'Xinheritance, SaaS company, xSplito, XLabTool, Shopify plugins, developer tools',
-      ogTitle: 'Xinheritance | Future of SaaS — xSplito, XLabTool & Shopify Plugins',
+      title: 'Inherit the Digital Future | Xinheritance',
+      description: 'We are a next gen SaaS development company building tools that don\'t just work—they evolve. From smart expense management to Shopify powerhouses to developer toolkits.',
+      keywords: 'Xinheritance, SaaS development, xSplito, XLabTool, Shopify plugins, developer tools',
+      ogTitle: 'Inherit the Digital Future | Xinheritance',
       ogDescription: "We build SaaS tools that don't just work—they evolve. From smart expense management to developer toolkits and Shopify powerhouses.",
       ogUrl: 'https://xinheritance.com/',
-      twitterTitle: 'Xinheritance | Future of SaaS',
+      twitterTitle: 'Inherit the Digital Future | Xinheritance',
       twitterDescription: "We build SaaS tools that don't just work—they evolve. xSplito, XLabTool & Shopify Plugins.",
       canonical: 'https://xinheritance.com/'
     },
@@ -107,24 +107,30 @@
 
     grid.innerHTML = products.map(function (product, index) {
       const highlights = product.card.highlights.map(function (item) {
-        return '<li class="flex items-center"><i class="fas fa-check ' + product.card.checksColorClass + ' mr-2"></i> ' + escapeHtml(item) + '</li>';
+        return '<li class="flex items-start gap-3"><i class="fas fa-check mt-1"></i><span>' + escapeHtml(item) + '</span></li>';
       }).join('');
 
+      var accentClass = 'product-card-accent-purple';
+      if (product.slug === 'xsplito') {
+        accentClass = 'product-card-accent-green';
+      } else if (product.slug === 'xlabtool') {
+        accentClass = 'product-card-accent-pink';
+      }
+
       return (
-        '<div class="glass-card rounded-2xl p-8 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="' + (index * 100) + '">' +
-          '<div class="absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl transition-all ' + product.card.glowClass + '"></div>' +
-          '<div class="w-12 h-12 rounded-lg bg-gradient-to-br ' + product.card.iconGradient + ' flex items-center justify-center mb-6">' +
-            '<i class="' + product.card.iconClass + ' text-white text-xl"></i>' +
+        '<article class="product-card ' + accentClass + '">' +
+          '<div class="product-icon">' +
+            '<i class="' + product.card.iconClass + '"></i>' +
           '</div>' +
-          '<h3 class="text-2xl font-display font-bold mb-1">' + escapeHtml(product.card.name) + '</h3>' +
-          '<p class="text-brand-cyan text-xs uppercase tracking-wider mb-3">' + escapeHtml(product.card.tagline) + '</p>' +
-          '<p class="text-gray-400 text-sm mb-6 leading-relaxed">' + escapeHtml(product.card.shortDescription) + '</p>' +
-          '<ul class="text-sm text-gray-300 space-y-2 mb-6">' + highlights + '</ul>' +
-          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">' +
-            '<a href="' + escapeHtml(product.detailPagePath || '#') + '" class="block w-full text-center py-2 rounded-lg border border-brand-cyan/40 hover:bg-brand-cyan/10 transition-colors text-sm font-semibold">View Details</a>' +
-            '<a href="' + escapeHtml(product.websiteUrl) + '" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors text-sm font-semibold">' + escapeHtml(product.card.websiteLabel) + ' <i class="fas fa-external-link-alt ml-1 text-xs"></i></a>' +
+          '<h3 class="product-title">' + escapeHtml(product.card.name) + '</h3>' +
+          '<p class="product-tag mt-2">' + escapeHtml(product.card.tagline) + '</p>' +
+          '<p class="product-body">' + escapeHtml(product.card.shortDescription) + '</p>' +
+          '<ul class="product-list">' + highlights + '</ul>' +
+          '<div class="product-actions">' +
+            '<a href="' + escapeHtml(product.detailPagePath || '#') + '" class="button-subtle button-subtle-light">View Details <i class="fas fa-arrow-right ml-2 text-xs"></i></a>' +
+            '<a href="' + escapeHtml(product.websiteUrl) + '" target="_blank" rel="noopener noreferrer" class="button-subtle button-subtle-accent">' + escapeHtml(product.card.websiteLabel) + '</a>' +
           '</div>' +
-        '</div>'
+        '</article>'
       );
     }).join('');
   }
@@ -137,6 +143,9 @@
     if (!productsGrid) return;
 
     renderProductCards(products);
+    if (window.AOS && typeof window.AOS.refreshHard === 'function') {
+      window.AOS.refreshHard();
+    }
   }
 
   function loadComponentIntoSlot(slotId, html) {
@@ -165,14 +174,27 @@
   }
 
   function initAOSComponent() {
+    // Scroll animations disabled to fix visibility while keeping UX simple
     AOS.init({
-      once: true,
-      offset: 50,
-      duration: 800
+      disable: true
     });
   }
 
   function initNavigationComponent() {
+    const nav = getById('siteNav');
+
+    function syncNavState() {
+      if (!nav) return;
+      if (window.scrollY > 16) {
+        nav.classList.add('nav-scrolled');
+      } else {
+        nav.classList.remove('nav-scrolled');
+      }
+    }
+
+    syncNavState();
+    window.addEventListener('scroll', syncNavState, { passive: true });
+
     window.toggleMobileMenu = function toggleMobileMenu() {
       const menu = getById(selectors.mobileMenu);
       menu.classList.toggle('hidden');
@@ -310,7 +332,6 @@
   }
 
   function initSiteComponents() {
-    initAOSComponent();
     initNavigationComponent();
     initPageVisibilityComponent();
     initProductsComponent();

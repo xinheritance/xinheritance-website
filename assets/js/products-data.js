@@ -4,12 +4,12 @@
       slug: 'xsplito',
       card: {
         name: 'xSplito',
-        tagline: 'Smart shared-expense management for modern groups',
+        tagline: 'Split expenses with friends without the headache',
         iconClass: 'fas fa-wallet',
         iconGradient: 'from-green-400 to-emerald-600',
         glowClass: 'bg-green-500/20 group-hover:bg-green-500/40',
         checksColorClass: 'text-green-400',
-        shortDescription: 'xSplito helps groups split expenses transparently, track balances in real time, and settle faster with less confusion.',
+        shortDescription: 'xSplito makes it easy to track group spending, see who owes what, and settle up quickly without the math.',
         highlights: [
           'Real-time expense synchronization across group members',
           'Receipt OCR scanning for quick and accurate entry',
@@ -18,8 +18,8 @@
         websiteLabel: 'Visit xSplito'
       },
       details: {
-        heroTitle: 'xSplito: Shared Expense Intelligence For Everyday Groups',
-        heroSummary: 'xSplito is designed for roommates, travel groups, project teams, and communities that need reliable shared-money workflows. It combines fast expense capture, transparent balance tracking, and practical settlement guidance so users can focus on collaboration instead of calculations.',
+        heroTitle: 'xSplito: Group expenses made simple',
+        heroSummary: 'We built xSplito for roommates, travelers, and friends who are tired of messy spreadsheets. It helps you capture expenses instantly, see clear balances, and settle up with just a few clicks.',
         sections: [
           {
             heading: 'Problem It Solves',
@@ -62,12 +62,12 @@
       slug: 'shopify-boosters',
       card: {
         name: 'Shopify Boosters',
-        tagline: 'Conversion-first app suite for performance-oriented stores',
+        tagline: 'Simple apps to help your Shopify store sell more',
         iconClass: 'fas fa-shopping-bag',
         iconGradient: 'from-purple-400 to-indigo-600',
         glowClass: 'bg-purple-500/20 group-hover:bg-purple-500/40',
         checksColorClass: 'text-purple-400',
-        shortDescription: 'Shopify Boosters provides growth-centric plugins for upsell automation, inventory confidence signals, and social proof orchestration.',
+        shortDescription: 'A collection of focused apps to help you automate upsells, show social proof, and boost your store\'s conversion rate.',
         highlights: [
           'One-click upsell and post-purchase optimization blocks',
           'Low-stock and high-demand inventory nudges',
@@ -76,8 +76,8 @@
         websiteLabel: 'View on App Store'
       },
       details: {
-        heroTitle: 'Shopify Boosters: Revenue Operations Layer For Shopify Stores',
-        heroSummary: 'Shopify Boosters is a focused app collection that helps merchants strengthen conversion pathways, reduce purchase hesitation, and improve average order value. The toolkit is built for practical deployment so operators can activate meaningful experiments quickly.',
+        heroTitle: 'Shopify Boosters: Grow your store without the complexity',
+        heroSummary: 'Shopify Boosters is a set of tools designed to help you sell more effectively. From one-click upsells to trust-building widgets, we provide everything you need to improve your store\'s performance without slowing it down.',
         sections: [
           {
             heading: 'Problem It Solves',
@@ -120,12 +120,12 @@
       slug: 'xlabtool',
       card: {
         name: 'XLabTool',
-        tagline: 'Browser-based developer utility suite for daily workflows',
+        tagline: 'Useful developer tools that live right in your browser',
         iconClass: 'fas fa-flask',
         iconGradient: 'from-pink-400 to-rose-600',
         glowClass: 'bg-pink-500/20 group-hover:bg-pink-500/40',
         checksColorClass: 'text-pink-400',
-        shortDescription: 'XLabTool provides essential browser-first utilities for document handling, image operations, and JSON validation/diffing workflows.',
+        shortDescription: 'Fast, browser-based tools for editing PDFs, formatting JSON, and tweaking images—no installation required.',
         highlights: [
           'Lightweight PDF and image editing in browser',
           'JSON formatter and structural diff utilities',
@@ -134,8 +134,8 @@
         websiteLabel: 'Open XLabTool'
       },
       details: {
-        heroTitle: 'XLabTool: Zero-Setup Utility Suite For Builders',
-        heroSummary: 'XLabTool is a focused toolbox for developers, analysts, and technical operators who need quick transformations without installing heavyweight desktop software. It emphasizes speed, usability, and accessibility in browser-native workflows.',
+        heroTitle: 'XLabTool: Fast utilities for busy developers',
+        heroSummary: 'XLabTool is a collection of simple, fast tools for developers and designers. Whether you need to format some messy JSON or quickly edit a PDF, we help you get it done in seconds without leaving your browser.',
         sections: [
           {
             heading: 'Problem It Solves',
