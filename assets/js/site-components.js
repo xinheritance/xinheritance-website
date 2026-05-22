@@ -191,16 +191,19 @@
 
     window.toggleMobileMenu = function toggleMobileMenu() {
       const menu = getById(selectors.mobileMenu);
-      menu.classList.toggle('hidden');
+      if (menu) menu.classList.toggle('hidden');
     };
   }
 
   function initPageVisibilityComponent() {
     function activatePrivacyPage(pushHash) {
-      getById(selectors.mainPage).style.display = 'none';
-      getById(selectors.privacyPage).classList.add('active');
+      const main = getById(selectors.mainPage);
+      if (main) main.style.display = 'none';
+      const priv = getById(selectors.privacyPage);
+      if (priv) priv.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      getById(selectors.mobileMenu).classList.add('hidden');
+      const menu = getById(selectors.mobileMenu);
+      if (menu) menu.classList.add('hidden');
       applySeoMeta('privacy');
 
       if (pushHash) {
@@ -209,8 +212,10 @@
     }
 
     function activateMainPage(pushHash) {
-      getById(selectors.privacyPage).classList.remove('active');
-      getById(selectors.mainPage).style.display = 'block';
+      const priv = getById(selectors.privacyPage);
+      if (priv) priv.classList.remove('active');
+      const main = getById(selectors.mainPage);
+      if (main) main.style.display = 'block';
       applySeoMeta('main');
 
       if (pushHash && window.location.hash === '#privacy') {
@@ -316,28 +321,26 @@
     });
   }
 
-  async function loadAndInitComponent(component) {
+  async function loadComponent(component) {
     try {
       const html = await loadHtmlComponent(component.path);
       loadComponentIntoSlot(component.slotId, html);
       console.log('Successfully loaded:', component.slotId);
-
-      // Initialize specific component logic after its HTML is in place
-      if (component.slotId === 'navigation-slot') {
-        initNavigationComponent();
-      } else if (component.slotId === 'main-page-slot') {
-        initPageVisibilityComponent();
-        initProductsComponent();
-        initContactFormComponent();
-      }
     } catch (error) {
       console.error('Error loading component (' + component.slotId + '):', error.message);
     }
   }
 
   async function bootstrap() {
-    // Load components in parallel but initialize them individually
-    await Promise.all(componentMap.map(loadAndInitComponent));
+    // Load components in parallel and wait for all to be in the DOM
+    await Promise.all(componentMap.map(loadComponent));
+    
+    // Initialize components after DOM is fully constructed
+    initNavigationComponent();
+    initPageVisibilityComponent();
+    initProductsComponent();
+    initContactFormComponent();
+    
     console.log('Site bootstrap sequence completed.');
   }
 
